@@ -29,6 +29,12 @@ app.get('/api/info', (req, res) => {
   });
 });
 
+// Promtheus metrics endpoint
+app.get('/metrics', (req, res) => {
+  res.set('Content-Type', 'text/plain');
+  res.send('custom_metrics_here');
+});
+
 // Only start the server if this file is run directly (not imported by tests)
 if (require.main === module) {
   app.listen(PORT, () => {
