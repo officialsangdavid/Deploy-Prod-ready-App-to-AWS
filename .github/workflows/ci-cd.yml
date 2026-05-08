@@ -26,11 +26,11 @@ jobs:
 
       - name: Install dependencies
         working-directory: app
-        run: npm install
+        run: npm ci
 
       - name: Run tests
         working-directory: app
-        run: jest --coverage
+        run: npm test
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
