@@ -1,6 +1,4 @@
 const express = require('express');
-const client = require('prom-client');
-client.collectDefaultMetrics();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
