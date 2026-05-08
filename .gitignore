@@ -1,0 +1,28 @@
+# Test coverage
+coverage/
+.coverage
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.*
+terraform.tfvars
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Docker
+.dockerignore
+
+# Logs
+*.log
+user-data.log
+
+.vscode/
+
+# ssh keys
+deploy-ec2-access
+deploy-ec2-access.pub
