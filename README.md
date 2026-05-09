@@ -325,8 +325,6 @@ Tests run automatically on every push:
 4. **Single instance**: No auto-scaling or load balancing
 5. **Basic security**: Security group allows SSH from anywhere (production: use bastion host)
 6. **GitHub Actions**: Used instead of Jenkins for simplicity
-7. **Docker Hub**: Public registry (production: use ECR)
-
 ---
 
 ## Limitations & Future Improvements
