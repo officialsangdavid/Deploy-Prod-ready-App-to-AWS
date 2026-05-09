@@ -231,7 +231,7 @@ A full observability stack runs as Docker containers alongside the application.
 ![grafana](./images/Grafana.png)
 ![grafana](./images/Grafana2.png)
 
-Access Grafana at `http://<EC2_IP>:3001` (credentials: `admin` / `devops2024`)
+Access Grafana at `http://<EC2_IP>:3001`
 
 **Prometheus Targets**  
 ![prometheus](./images/prometheus.png)
