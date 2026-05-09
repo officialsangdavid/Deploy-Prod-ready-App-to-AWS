@@ -321,10 +321,8 @@ Tests run automatically on every push:
 
 1. **Single-region deployment**: Application runs in `eu-west-2` only
 2. **No database**: Stateless microservice (no persistent storage)
-3. **HTTP only**: No SSL/TLS (production would use HTTPS + ALB)
-4. **Single instance**: No auto-scaling or load balancing
-5. **Basic security**: Security group allows SSH from anywhere (production: use bastion host)
-6. **GitHub Actions**: Used instead of Jenkins for simplicity
+3. **Single instance**: No auto-scaling or load balancing
+4. **GitHub Actions**: Used instead of Jenkins for simplicity
 ---
 
 ## Limitations & Future Improvements
@@ -334,7 +332,6 @@ Tests run automatically on every push:
 - **No auto-scaling**: Single EC2 instance (no redundancy)
 - **No database**: Stateless application only
 - **Basic logging**: No centralized log aggregation (ELK, CloudWatch Logs)
-- **Manual secret management**: Secrets in GitHub (production: use AWS Secrets Manager)
 - **No blue-green deployment**: Downtime during updates
 
 ### Recommended Improvements
