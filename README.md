@@ -7,7 +7,7 @@ Automated deployment of a containerized Node.js microservice on AWS EC2 using Te
 
 ## Architecture Flow & Overview
 
-**![Architecture](./images/devops_architecture_final.svg)**
+**![Architecture](./images/devops_architecture_final%20(1).svg)**
 
 ### Infrastructure Components
 
@@ -185,42 +185,101 @@ curl http://http://35.178.42.66/health
 
 ## Monitoring & Logging
 
-### CloudWatch Configuration
+This project uses a dual monitoring approach: **AWS CloudWatch** for infrastructure-level 
+metrics and **Prometheus + Grafana** for application-level observability.
 
-#### 1. EC2 Instance Metrics (Automatic)
-AWS CloudWatch automatically tracks:
-- CPU Utilization
-- Status Checks (Instance)
+---
 
-**CPU Utilization Dashboard**  
-**![cloudwatch](./images/cloudwatch%20cpu.png)**
+### 1. AWS CloudWatch (Infrastructure Metrics)
+
+AWS CloudWatch automatically tracks EC2-level health:
+
+**CPU Utilization Alarm**  
+![cloudwatch](./images/cloudwatch%20cpu.png)
 
 - **Metric**: CPUUtilization > 70%
 - **Period**: 5 minutes
-- **Purpose**: Alert for UPU Utiilization
+- **Purpose**: Alert on high CPU usage
 
 **Status Check Alarm**  
-**![cloudwatch](./images/statuscheck%20.png)**
+![cloudwatch](./images/statuscheck%20.png)
 
 - **Metric**: StatusCheckFailed_Instance
-- - **Period**: 0
+- **Period**: 1 minute
 - **Purpose**: Detect EC2 instance failures
 
-#### 2. Application Health Monitoring
-The app exposes a `/health` endpoint:
+---
+
+### 2. Prometheus + Grafana (Application Metrics)
+
+A full observability stack runs as Docker containers alongside the application.
+
+| Component | Port | Role |
+|---|---|---|
+| Prometheus | 9090 | Scrapes and stores metrics |
+| Grafana | 3001 | Visualises metrics via dashboards |
+| Node Exporter | 9100 | Exposes host-level metrics to Prometheus |
+
+**Metrics collected:**
+
+- **CPU usage** — via Node Exporter host metrics
+- **Memory usage** — container and host memory consumption
+- **Process uptime** — application availability over time
+- **Application availability** — `/health` endpoint monitored via Grafana
+
+**Grafana Dashboard**  
+![grafana](./images/Grafana.png)
+![grafana](./images/Grafana2.png)
+
+Access Grafana at `http://<EC2_IP>:3001` (credentials: `admin` / `devops2024`)
+
+**Prometheus Targets**  
+![prometheus](./images/prometheus.png)
+
+Access Prometheus at `http://<EC2_IP>:9090`
+
+**Dashboard setup:**
+1. Login to Grafana → Connections → Data Sources → Add Prometheus
+2. Set URL to `http://prometheus:9090` → Save & Test
+3. Dashboards → Import → ID `1860` → Load → select Prometheus source → Import
+
+---
+
+### 3. Application Health Endpoint
+
+The app exposes a `/health` endpoint polled by Grafana for availability monitoring:
+
 ```bash
-curl http://35.178.42.66/health
+curl http://<EC2_IP>/health
+
+# Expected response:
+{
+  "status": "healthy",
+  "timestamp": "2026-05-08T...",
+  "version": "1.0.0"
+}
 ```
 
-#### 3. Application Logs
-Docker container logs are accessible via:
+---
+
+### 4. Application Logs
+
+Docker container logs are accessible via SSH:
+
 ```bash
 ssh -i ~/.ssh/devops-challenge ubuntu@<EC2_IP>
-docker logs <container_name>
+
+# View app logs
+docker logs app
+
+# Follow logs in real time
+docker logs -f app
+
+# View all containers
+docker compose -f /opt/deploy-prod-ready-application/docker-compose.yml ps
 ```
 
-**![App Logs](./images/App%20Logs.png)**
-
+![App Logs](./images/App%20Logs.png)
 ---
 
 ## Application Testing
@@ -342,7 +401,13 @@ Tests run automatically on every push:
 **![Status check](./images/statuscheck%20.png)**
 
 ### 12. Application Architecture
-**![Terraform Init](./images/devops_architecture_final.svg)**
+**![Terraform Init](./images/devops_architecture_final%20(1).svg)**
+
+### 13. Prometheus targets
+**![Prometheus](./images/prometheus.png)**
+
+### 14. Grafana Dashboards
+**![Grafana](./images/Grafana.png)**
 ---
 
 ## Contact
