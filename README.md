@@ -313,7 +313,7 @@ Tests run automatically on every push:
 | Container Registry | Docker Hub | - |
 | Application | Node.js + Express | 18.x |
 | Testing | Jest + Supertest | 29.x |
-| Monitoring | AWS CloudWatch | - |
+| Monitoring | AWS CloudWatch, Prometheus, Grafana | - |
 
 ---
 
