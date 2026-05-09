@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const client = require('prom-client');
+client.collectDefaultMetrics();
 
 app.use(express.json());
 
@@ -29,7 +31,6 @@ app.get('/api/info', (req, res) => {
   });
 });
 
-// Promtheus metrics endpoint
 app.get('/metrics', async (req, res) => {
   res.set('Content-Type', client.register.contentType);
   res.end(await client.register.metrics());
