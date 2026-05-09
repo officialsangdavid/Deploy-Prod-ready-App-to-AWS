@@ -133,7 +133,7 @@ These outputs after terraform provisions all infrastructure will be added to the
 
 ### 5: Install Docker on EC2
 ```bash
-ssh -i ~/.ssh/devops-challenge ubuntu@http://35.178.42.66/health
+ssh -i ~/.ssh/devops-challenge ubuntu@http://EC2_IP/health
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 sudo usermod -aG docker ubuntu
@@ -171,7 +171,7 @@ GitHub Actions will automatically:
 ### 8. Verify Deployment
 ```bash
 # Check application is running
-curl http://http://35.178.42.66/health
+curl http://http:/EC2_IP/health
 
 # Expected response:
 {
