@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 app.get('/api/info', (req, res) => {
   res.status(200).json({
     app: 'Prod-Ready-Application',
-    region: process.env.AWS_REGION || 'unknown',
+    region: process.env.AWS_REGION || 'CI-CD',
     environment: process.env.NODE_ENV || 'development'
   });
 });
